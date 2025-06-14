@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>缪斯计划制谱器</title>
-    <!-- 引入 Font Awesome 图标库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
@@ -22,8 +21,36 @@
         .site-title {
             text-align: center;
             margin-top: 20px;
+            margin-bottom: 20px;
             font-size: 24px;
             font-weight: bold;
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 5px;
+            padding: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        body.dark-mode .theme-toggle {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .theme-toggle i {
+            color: inherit;
+        }
+        body.dark-mode .theme-toggle i.fa-sun {
+            color: white;
+        }
+        body.light-mode .theme-toggle i.fa-moon {
+            color: black;
+        }
+        .content {
+            margin-top: 80px;
         }
         /* 加载状态栏样式 */
         .loading-bar {
@@ -61,30 +88,33 @@
     </style>
 </head>
 <body>
-    <div class="loading-bar" id="loading-bar">
-        <p id="loading-text">正在加载组件...</p>
-        <div class="progress-bar">
-            <div class="progress" id="progress"></div>
-        </div>
-    </div>
-
     <div class="site-title">缪斯计划制谱器</div>
 
-    <theme-toggle></theme-toggle>
+    <button class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-moon" id="moon-icon"></i>
+        <i class="fas fa-sun" id="sun-icon" style="display: none;"></i>
+    </button>
 
-    <upload-section></upload-section>
+    <div class="content">
+        <div class="loading-bar" id="loading-bar">
+            <p id="loading-text">正在加载组件...</p>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+        </div>
 
-    <settings-section></settings-section>
+        <upload-section></upload-section>
 
-    <game-container></game-container>
+        <settings-section></settings-section>
+
+        <game-container></game-container>
+    </div>
 
     <script>
-        // 模拟组件加载过程
         document.addEventListener("DOMContentLoaded", function() {
             const loadingText = document.getElementById('loading-text');
             const progress = document.getElementById('progress');
             const components = [
-                { name: '主题组件', path: '/huh/theme-toggle.js' },
                 { name: '上传组件', path: '/huh/upload-section.js' },
                 { name: '设置组件', path: '/huh/settings-section.js' },
                 { name: '游戏组件', path: '/huh/game-container.js' }
@@ -98,7 +128,7 @@
                     const script = document.createElement('script');
                     script.src = component.path;
                     script.onload = () => {
-                        progressValue += 25;
+                        progressValue += 33.33;
                         progress.style.width = `${progressValue}%`;
                         resolve();
                     };
@@ -117,6 +147,33 @@
             }
 
             loadAllComponents();
+
+            // 主题切换逻辑
+            const themeToggle = document.getElementById('theme-toggle');
+            const moonIcon = document.getElementById('moon-icon');
+            const sunIcon = document.getElementById('sun-icon');
+            const prefersDarkMode = window.localStorage.getItem('prefersDarkMode') === 'true';
+
+            if (prefersDarkMode) {
+                document.body.classList.add('dark-mode');
+                moonIcon.style.display = 'none';
+                sunIcon.style.display = 'inline';
+            } else {
+                document.body.classList.add('light-mode');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                document.body.classList.toggle('light-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    moonIcon.style.display = 'none';
+                    sunIcon.style.display = 'inline';
+                } else {
+                    moonIcon.style.display = 'inline';
+                    sunIcon.style.display = 'none';
+                }
+                window.localStorage.setItem('prefersDarkMode', document.body.classList.contains('dark-mode'));
+            });
         });
     </script>
 </body>
