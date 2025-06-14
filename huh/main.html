@@ -1,1 +1,50 @@
-huh
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="MobileOptimized" content="320">
+    <meta name="HandheldFriendly" content="True">
+    <title>主页面</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-width: 320px;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        p {
+            font-size: 16px;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var referrer = document.referrer;
+            if (referrer.indexOf("index.html") === -1) {
+                document.body.innerHTML = "<h1>访问被拒绝</h1><p>您不能直接访问此页面。</p>";
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>欢迎来到主页面！</h1>
+    <p>此页面只能通过 index.html 访问。</p>
+</body>
+</html>
