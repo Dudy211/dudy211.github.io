@@ -3,23 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="MobileOptimized" content="320">
-    <meta name="HandheldFriendly" content="True">
-    <title>正在跳转...</title>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            if (window.location && window.location.href) {
-                window.location.href = "/huh/main.html";
-            }
-        });
-    </script>
+    <title>缪斯计划制谱器</title>
+    <!-- 引入 Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-width: 320px;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+        }
+        .site-title {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        /* 加载状态栏样式 */
+        .loading-bar {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            text-align: center;
+        }
+        body.dark-mode .loading-bar {
+            background-color: #2d2d2d;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        body.dark-mode .progress-bar {
+            background-color: #444;
+        }
+        .progress {
+            height: 100%;
+            width: 0%;
+            background-color: #4285f4;
+            transition: width 0.3s;
+        }
+        body.dark-mode .progress {
+            background-color: #64a7ff;
+        }
+    </style>
 </head>
 <body>
-    <noscript>
-        <meta http-equiv="refresh" content="0; url=/huh/main.html">
-    </noscript>
-    <p>正在跳转到主页面。如果未自动跳转，请 <a href="/huh/main.html">点击这里</a>。</p>
+    <div class="loading-bar" id="loading-bar">
+        <p id="loading-text">正在加载组件...</p>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+    </div>
+
+    <div class="site-title">缪斯计划制谱器</div>
+
+    <theme-toggle></theme-toggle>
+
+    <upload-section></upload-section>
+
+    <settings-section></settings-section>
+
+    <game-container></game-container>
+
+    <script>
+        // 模拟组件加载过程
+        document.addEventListener("DOMContentLoaded", function() {
+            const loadingText = document.getElementById('loading-text');
+            const progress = document.getElementById('progress');
+            const components = [
+                { name: '主题组件', path: '/huh/theme-toggle.js' },
+                { name: '上传组件', path: '/huh/upload-section.js' },
+                { name: '设置组件', path: '/huh/settings-section.js' },
+                { name: '游戏组件', path: '/huh/game-container.js' }
+            ];
+
+            let progressValue = 0;
+
+            function loadComponent(component) {
+                return new Promise(resolve => {
+                    loadingText.textContent = `正在加载: ${component.name}`;
+                    const script = document.createElement('script');
+                    script.src = component.path;
+                    script.onload = () => {
+                        progressValue += 25;
+                        progress.style.width = `${progressValue}%`;
+                        resolve();
+                    };
+                    document.head.appendChild(script);
+                });
+            }
+
+            async function loadAllComponents() {
+                for (const component of components) {
+                    await loadComponent(component);
+                }
+                loadingText.textContent = '所有组件加载完成!';
+                setTimeout(() => {
+                    document.getElementById('loading-bar').style.display = 'none';
+                }, 1000);
+            }
+
+            loadAllComponents();
+        });
+    </script>
 </body>
 </html>
