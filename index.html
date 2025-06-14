@@ -114,6 +114,8 @@
         document.addEventListener("DOMContentLoaded", function() {
             const loadingText = document.getElementById('loading-text');
             const progress = document.getElementById('progress');
+            const loadingBar = document.getElementById('loading-bar');
+            const content = document.querySelector('.content');
             const components = [
                 { name: '上传组件', path: '/huh/upload-section.js' },
                 { name: '设置组件', path: '/huh/settings-section.js' },
@@ -141,8 +143,9 @@
                     await loadComponent(component);
                 }
                 loadingText.textContent = '所有组件加载完成!';
+                progress.style.width = '100%';
                 setTimeout(() => {
-                    document.getElementById('loading-bar').style.display = 'none';
+                    loadingBar.remove(); // 移除加载栏元素
                 }, 1000);
             }
 
