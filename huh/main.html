@@ -3,48 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="MobileOptimized" content="320">
-    <meta name="HandheldFriendly" content="True">
     <title>主页面</title>
     <style>
+        /* 基础样式设置 */
         body {
             font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
             margin: 0;
             padding: 20px;
             min-width: 320px;
+            background-color: #f5f5f5;
+            color: #333;
         }
-        h1 {
-            font-size: 24px;
+        header {
+            background-color: #4285f4;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            margin-bottom: 20px;
         }
-        p {
-            font-size: 16px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
         }
-        a {
-            color: #0066cc;
-            text-decoration: none;
-        }
+        /* 响应式样式设置 */
         @media screen and (max-width: 768px) {
             body {
                 padding: 10px;
             }
-            h1 {
-                font-size: 20px;
+            header {
+                padding: 10px 0;
             }
         }
     </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>欢迎来到主页面</h1>
+        </div>
+    </header>
+    <main class="container">
+        <section>
+            <h2>主要内容区域</h2>
+            <p>这里是主页面的主要内容，你可以逐步提出要求来完善这个页面。</p>
+        </section>
+    </main>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // 检查是否通过 index.html 跳转而来
             var referrer = document.referrer;
             if (referrer.indexOf("index.html") === -1) {
                 document.body.innerHTML = "<h1>访问被拒绝</h1><p>您不能直接访问此页面。</p>";
             }
         });
     </script>
-</head>
-<body>
-    <h1>欢迎来到主页面！</h1>
-    <p>此页面只能通过 index.html 访问。</p>
 </body>
 </html>
