@@ -1,4 +1,3 @@
-// container.js
 class HuhContain extends HTMLElement {
     constructor() {
         super();
@@ -32,7 +31,6 @@ class HuhContain extends HTMLElement {
             padding: 20px;
             box-sizing: border-box;
             border-radius: 10px;
-            margin: 20px auto;
             width: 80vw;
             height: calc(80vw / ${widthRatio} * ${heightRatio});
             position: relative;
@@ -61,10 +59,13 @@ class HuhContain extends HTMLElement {
         this.shadowRoot.innerHTML = `
             <style>
                 :host {
-                    display: block;
+                    display: flex; /* 修改为 flex 布局 */
+                    justify-content: center;
+                    align-items: center; /* 添加垂直居中 */
                     width: 100%;
                     max-width: 600px;
                     margin: 0 auto;
+                    height: 100%; /* 添加高度 */
                 }
                 .container {
                     ${containerStyle}
